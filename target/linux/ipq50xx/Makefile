@@ -28,6 +28,8 @@ DEFAULT_PACKAGES += \
 	uboot-envtools \
 	kmod-qca-nss-dp swconfig \
 	kmod-qca-nss-drv qca-nss-fw-ipq50xx-retail \
-	kmod-ath11k wpad-basic-wolfssl
+	kmod-qca-nss-ecm-standard \
+	kmod-ath11k wpad-basic-wolfssl \
+	autocore default-settings-chn
 
 $(eval $(call BuildTarget))

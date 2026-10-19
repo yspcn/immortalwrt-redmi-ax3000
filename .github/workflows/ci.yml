@@ -61,6 +61,10 @@ jobs:
             CONFIG_PACKAGE_kmod-qca-nss-drv-pppoe=y
 
             CONFIG_PACKAGE_luci=y
+            CONFIG_PACKAGE_luci-theme-argon=y
+            CONFIG_PACKAGE_luci-i18n-base-zh-cn=y
+            CONFIG_PACKAGE_autocore=y
+            CONFIG_PACKAGE_default-settings-chn=y
           EOF
           make defconfig
 
