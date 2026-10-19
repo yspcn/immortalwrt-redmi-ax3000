@@ -10,7 +10,7 @@ PKG_SOURCE_URL:=https://git.codelinaro.org/clo/qsdk/oss/lklm/nss-clients
 PKG_SOURCE_VERSION:=30742bb1decd5fe7b4e01be8081ab0a99c1f6888
 PKG_MIRROR_HASH:=skip
 
-PKG_BUILD_DEPENDS := PACKAGE_kmod-qca-nss-crypto:kmod-qca-nss-crypto
+PKG_BUILD_DEPENDS:=
 MAKE_OPTS:=
 
 include $(INCLUDE_DIR)/package.mk
@@ -53,7 +53,7 @@ define KernelPackage/qca-nss-drv-dtlsmgr
   CATEGORY:=Kernel modules
   SUBMENU:=Network Devices
   TITLE:=Kernel driver for NSS (connection manager) - dtlsmgr
-  DEPENDS:=+kmod-qca-nss-drv +kmod-qca-nss-cfi-cryptoapi
+  DEPENDS:=+kmod-qca-nss-drv
   FILES:=$(PKG_BUILD_DIR)/dtls/$(DTLSMGR_DIR)/qca-nss-dtlsmgr.ko
 endef
 
@@ -67,7 +67,7 @@ define KernelPackage/qca-nss-drv-tlsmgr
   SUBMENU:=Network Devices
   TITLE:=Kernel driver for NSS (connection manager) - tlsmgr
   DEPENDS:=@(TARGET_ipq60xx||TARGET_ipq807x) \
-	+kmod-qca-nss-drv +kmod-qca-nss-cfi-cryptoapi
+	+kmod-qca-nss-drv
   FILES:=$(PKG_BUILD_DIR)/tls/qca-nss-tlsmgr.ko
 endef
 
@@ -180,8 +180,7 @@ define KernelPackage/qca-nss-drv-ipsecmgr
   SUBMENU:=Network Devices
   TITLE:=Kernel driver for NSS (ipsec manager) - ipsecmgr
   DEPENDS:=@(TARGET_ipq50xx||TARGET_ipq60xx||TARGET_ipq806x||TARGET_ipq807x) \
-	+kmod-qca-nss-drv +kmod-qca-nss-cfi-cryptoapi \
-	+!LINUX_5_4:kmod-qca-nss-cfi-ocf \
+	+kmod-qca-nss-drv \
 	+PACKAGE_kmod-qca-nss-drv-l2tpv2:kmod-qca-nss-drv-l2tpv2
   FILES:=$(PKG_BUILD_DIR)/ipsecmgr/$(IPSECMGR_DIR)/qca-nss-ipsecmgr.ko
   AUTOLOAD:=$(call AutoLoad,60,qca-nss-ipsecmgr)
@@ -198,7 +197,6 @@ define KernelPackage/qca-nss-drv-ipsecmgr-klips
   TITLE:=Kernel driver for NSS (ipsec klips)
   DEPENDS:=@(TARGET_ipq50xx||TARGET_ipq60xx||TARGET_ipq807x) \
 	kmod-qca-nss-ecm \
-	+kmod-qca-nss-drv-ipsecmgr +kmod-qca-nss-cfi-ocf \
 	+PACKAGE_kmod-qca-nss-drv-vxlanmgr:kmod-qca-nss-drv-vxlanmgr
   FILES:=$(PKG_BUILD_DIR)/ipsecmgr/$(IPSECMGR_DIR)/plugins/klips/qca-nss-ipsec-klips.ko
 endef
@@ -214,7 +212,7 @@ define KernelPackage/qca-nss-drv-ipsecmgr-xfrm
   TITLE:=Kernel driver for NSS (ipsec xfrm)
   DEPENDS:=@(TARGET_ipq50xx||TARGET_ipq60xx||TARGET_ipq807x) \
 	kmod-qca-nss-ecm \
-	+kmod-ipsec +kmod-qca-nss-drv-ipsecmgr \
+	+kmod-ipsec \
 	+PACKAGE_kmod-qca-nss-drv-vxlanmgr:kmod-qca-nss-drv-vxlanmgr
   FILES:=$(PKG_BUILD_DIR)/ipsecmgr/$(IPSECMGR_DIR)/plugins/xfrm/qca-nss-ipsec-xfrm.ko
 endef
@@ -227,7 +225,7 @@ define KernelPackage/qca-nss-drv-capwapmgr
   SECTION:=kernel
   CATEGORY:=Kernel modules
   SUBMENU:=Network Devices
-  DEPENDS:=+kmod-qca-nss-drv +kmod-qca-nss-drv-dtlsmgr
+  DEPENDS:=+kmod-qca-nss-drv
   TITLE:=NSS CAPWAP Manager for QCA NSS driver (IPQ806x)
   FILES:=$(PKG_BUILD_DIR)/capwapmgr/qca-nss-capwapmgr.ko
 endef
@@ -243,8 +241,7 @@ define KernelPackage/qca-nss-drv-bridge-mgr
   TITLE:=Kernel driver for NSS bridge manager
   DEPENDS:=@(TARGET_ipq60xx||TARGET_ipq807x) \
 	+(TARGET_ipq60xx||TARGET_ipq807x):kmod-qca-nss-drv-vlan-mgr \
-	+PACKAGE_kmod-bonding:kmod-bonding \
-	+PACKAGE_kmod-qca-ovsmgr:kmod-qca-ovsmgr
+	+PACKAGE_kmod-bonding:kmod-bonding
   FILES:=$(PKG_BUILD_DIR)/bridge/qca-nss-bridge-mgr.ko
   AUTOLOAD:=$(call AutoLoad,51,qca-nss-bridge-mgr)
 endef
@@ -317,10 +314,7 @@ define KernelPackage/qca-nss-drv-netlink
   CATEGORY:=Kernel modules
   SUBMENU:=Network Devices
   DEPENDS:=@(TARGET_ipq50xx||TARGET_ipq60xx||TARGET_ipq807x) \
-	+kmod-qca-nss-drv \
-	+PACKAGE_kmod-qca-nss-drv-ipsecmgr:kmod-qca-nss-drv-ipsecmgr \
-	+PACKAGE_kmod-qca-nss-drv-dtlsmgr:kmod-qca-nss-drv-dtlsmgr \
-	+PACKAGE_kmod-qca-nss-drv-capwapmgr:kmod-qca-nss-drv-capwapmgr
+	+kmod-qca-nss-drv
   TITLE:=NSS NETLINK Manager for QCA NSS driver
   FILES:=$(PKG_BUILD_DIR)/netlink/qca-nss-netlink.ko
 endef
@@ -335,7 +329,7 @@ define KernelPackage/qca-nss-drv-ovpn-mgr
   SUBMENU:=Network Devices
   TITLE:=Kernel driver for NSS OpenVPN manager
   DEPENDS:=@(TARGET_ipq60xx||TARGET_ipq807x) \
-	+kmod-qca-nss-drv +kmod-qca-nss-cfi-cryptoapi +kmod-tun +kmod-ipt-conntrack
+	+kmod-qca-nss-drv +kmod-tun +kmod-ipt-conntrack
   FILES:=$(PKG_BUILD_DIR)/openvpn/src/qca-nss-ovpn-mgr.ko
 endef
 

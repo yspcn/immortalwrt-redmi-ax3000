@@ -37,8 +37,7 @@ define KernelPackage/qca-nss-ecm/Default
   DEPENDS:=@(TARGET_ipq50xx||TARGET_ipq60xx||TARGET_ipq806x||TARGET_ipq807x) \
 	+kmod-ipt-conntrack +iptables-mod-extra \
 	+kmod-qca-nss-drv \
-	+kmod-pppoe \
-	+PACKAGE_kmod-qca-ovsmgr:kmod-qca-ovsmgr
+	+kmod-pppoe
   TITLE:=QCA NSS Enhanced Connection Manager (ECM)
   FILES:=$(PKG_BUILD_DIR)/*.ko $(FILES_EXAMPLES) $(PKG_BUILD_DIR)/examples/ecm_ae_select.ko
   KCONFIG:= \
@@ -55,13 +54,8 @@ define KernelPackage/qca-nss-ecm-nonss/Default
   SUBMENU:=Network Support
   DEPENDS:=@TARGET_ipq50xx \
 	+kmod-ipt-conntrack +iptables-mod-extra \
-	+kmod-shortcut-fe-drv \
 	+kmod-bonding \
-	+kmod-nat46 +kmod-pppoe +kmod-l2tp +kmod-pppol2tp +kmod-pptp \
-	+PACKAGE_kmod-qca-ovsmgr:kmod-qca-ovsmgr \
-	+PACKAGE_kmod-qca-mcs:kmod-qca-mcs \
-	+PACKAGE_kmod-qca-hyfi-bridge:kmod-qca-hyfi-bridge \
-	PACKAGE_kmod-emesh-sp:kmod-emesh-sp
+	+kmod-nat46 +kmod-pppoe +kmod-l2tp +kmod-pppol2tp +kmod-pptp
   TITLE:=QCA NSS Enhanced Connection Manager (ECM)
   FILES:=$(PKG_BUILD_DIR)/*.ko $(FILES_EXAMPLES) $(PKG_BUILD_DIR)/examples/ecm_ae_select.ko
   KCONFIG:= \
@@ -97,7 +91,6 @@ define KernelPackage/qca-nss-ecm-standard
   $(call KernelPackage/qca-nss-ecm/Default)
   TITLE+= (with standard features)
   VARIANT:=standard
-  DEPENDS+=+PACKAGE_kmod-qca-mcs:kmod-qca-mcs
 endef
 
 define KernelPackage/qca-nss-ecm-standard/Description
@@ -114,12 +107,8 @@ $(call KernelPackage/qca-nss-ecm/Default)
   TITLE+= (with premium features)
   VARIANT:=premium
   DEPENDS+= \
-	+kmod-shortcut-fe-drv \
 	+kmod-bonding \
-	+kmod-nat46 +kmod-l2tp +kmod-pppol2tp +kmod-pptp \
-	+PACKAGE_kmod-qca-mcs:kmod-qca-mcs \
-	+PACKAGE_kmod-qca-hyfi-bridge:kmod-qca-hyfi-bridge \
-	PACKAGE_kmod-emesh-sp:kmod-emesh-sp
+	+kmod-nat46 +kmod-l2tp +kmod-pppol2tp +kmod-pptp
 endef
 
 define KernelPackage/qca-nss-ecm-nonss
@@ -165,10 +154,8 @@ define KernelPackage/qca-nss-ecm-noload
   PROVIDES:=kmod-qca-nss-ecm
   VARIANT:=noload
   DEPENDS+= \
-	+kmod-shortcut-fe-drv \
 	+kmod-bonding \
-	+kmod-l2tp +kmod-pppol2tp +kmod-pptp \
-	+PACKAGE_kmod-qca-mcs:kmod-qca-mcs
+	+kmod-l2tp +kmod-pppol2tp +kmod-pptp
 endef
 
 define KernelPackage/qca-nss-ecm-noload/Description
