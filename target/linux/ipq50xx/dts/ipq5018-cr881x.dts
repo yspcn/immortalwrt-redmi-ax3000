@@ -42,6 +42,20 @@
 		};
 	};
 
+	/* CR881x has 256 MiB and its bootloader does not fix up this node. */
+	memory@40000000 {
+		device_type = "memory";
+		reg = <0x0 0x40000000 0x0 0x10000000>;
+	};
+
+	vddcpu: regulator-vddcpu {
+		compatible = "regulator-fixed";
+		regulator-name = "vddcpu";
+		regulator-min-microvolt = <1100000>;
+		regulator-max-microvolt = <1100000>;
+		regulator-always-on;
+	};
+
 	thermal-zones {
 		status = "ok";
 	};
@@ -525,4 +539,22 @@
 #endif
 
 	status = "ok";
+};
+
+/* Match the clock and console setup used by working IPQ5018 boards. */
+&sleep_clk {
+	clock-frequency = <32000>;
+};
+
+&xo_board_clk {
+	clock-div = <4>;
+	clock-mult = <1>;
+};
+
+&cpu0 {
+	cpu-supply = <&vddcpu>;
+};
+
+&cpu1 {
+	cpu-supply = <&vddcpu>;
 };

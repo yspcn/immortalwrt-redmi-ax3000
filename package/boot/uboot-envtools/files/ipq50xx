@@ -12,7 +12,10 @@ case "$board" in
 	cmcc,rax3000q|\
 	redmi,ax3000|\
 	xiaomi,cr881x)
-		ubootenv_add_uci_config "/dev/mtd10" "0x0" "0x10000" "0x20000"
+		dev=$(find_mtd_part 0:appsblenv)
+		[ -n "$dev" ] || dev=$(find_mtd_part 0:APPSBLENV)
+		[ -n "$dev" ] || dev="/dev/mtd10"
+		ubootenv_add_uci_config "$dev" "0x0" "0x10000" "0x20000"
 		;;
 esac
 
